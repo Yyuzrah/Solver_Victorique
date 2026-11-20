@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="victorique-token" content="__VICTORIQUE_TOKEN__">
+<title>Victorique</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/new">Victorique</a>
+  <nav aria-label="Pages">
+    <a href="#/new" data-nav="new">New problem<span class="cap" lang="zh-CN">新建题目</span></a>
+    <a href="#/runs" data-nav="runs">Runs<span class="cap" lang="zh-CN">运行记录</span></a>
+  </nav>
+  <span class="version">version __VICTORIQUE_VERSION__</span>
+</header>
+
+<div id="offline" class="banner hidden" role="alert">
+  The interface is not responding. Check that <code>victorique gui</code> is still running in its terminal window.
+</div>
+
+<main id="main">
+  <noscript><p class="box warn">This page needs JavaScript. The page and its scripts come only from this computer.</p></noscript>
+
+  <section id="view-new" class="view hidden" aria-labelledby="new-heading">
+    <h1 id="new-heading">New problem<span class="cap" lang="zh-CN">新建题目</span></h1>
+    <p class="lead">Paste a problem. Victorique asks the model service you choose for a proof, has the proof checked
+      twice, and either delivers it or explains why it did not.</p>
+    <form id="new-form" novalidate>
+      <div class="col col-problem">
+        <p class="label">Problem<span class="cap" lang="zh-CN">题目</span></p>
+        <div class="field">
+          <label for="title">Title <span class="optional">(optional)</span></label>
+          <input id="title" name="title" type="text" maxlength="200" autocomplete="off"
+                 placeholder="For example: Problem 3, sums of squares">
+          <p class="help">Only used to find the run in the list. Without a title, the first line of the statement is shown.</p>
+        </div>
+        <div class="field">
+          <label for="statement">Problem statement</label>
+          <textarea id="statement" name="statement" rows="12" spellcheck="false" required
+                    placeholder="Prove that for every integer $n$, $n + 0 = n$."></textarea>
+          <p class="help">Markdown and LaTeX are kept exactly as typed and sent as plain text. Up to 256,000 bytes.</p>
+        </div>
+      </div>
+
+      <div class="col col-approach">
+        <fieldset class="field">
+          <legend class="label">Approach<span class="cap" lang="zh-CN">方法</span></legend>
+          <label class="choice">
+            <input type="radio" name="policy" value="single" checked>
+            <span><strong>Solve once and check</strong> (single, the default). One solution, a statement check and a
+              proof check. The proof is delivered only if both checks pass. 3 model calls, plus one for each call
+              sent again after a timeout.</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="policy" value="ladder">
+            <span><strong>Solve, check and repair</strong> (ladder). The same solution and two checks. If a check finds
+              a real problem, the solver repairs the proof, at most twice. Usually 3 to 9 model calls.</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="policy" value="full">
+            <span><strong>Full workflow</strong> (full). Plans the proof, solves the parts, criticises and repairs them,
+              then runs the two final checks. Meant for long problems; uses more calls.</span>
+          </label>
+          <p class="help">The two checks: a <em>statement check</em> asks whether the proof proves exactly the problem as
+            stated; a <em>proof check</em> reads every step of the whole proof.</p>
+        </fieldset>
+
+        <div class="field">
+          <label for="undecided">When a check is undecided</label>
+          <select id="undecided" name="undecided_checks" disabled>
+            <option value="abstain" selected>Abstain (default)</option>
+            <option value="repair">Repair once</option>
+          </select>
+          <p class="help" id="undecided-help">A check is undecided when it neither passes nor reports a serious or fatal
+            problem, or when it returns no usable report. Used by the ladder approach.</p>
+        </div>
+
+        <div class="field">
+          <label for="minor">When a check passes with minor findings</label>
+          <select id="minor" name="minor_findings" disabled>
+            <option value="nonblocking" selected>Count it as passed (default)</option>
+            <option value="blocking">Count it as not passed</option>
+          </select>
+          <p class="help" id="minor-help">A check can say pass and still list minor findings, such as unclear wording.
+            Used by every approach.</p>
+        </div>
+      </div>
+
+      <div class="col col-model">
+        <p class="label">Model<span class="cap" lang="zh-CN">模型</span></p>
+        <div class="row model">
+          <div class="field">
+            <label for="backend">Model service</label>
+            <select id="backend" name="backend">
+              <option value="codex">Codex CLI (OpenAI models)</option>
+              <option value="claude">Claude Code CLI (Anthropic models)</option>
+              <option value="fake">Practice run (no model is called)</option>
+            </select>
+            <p class="help" id="backend-help">Uses the command-line tool installed on this computer, with the account you
+              logged in to yourself. Victorique never asks for or reads passwords.</p>
+          </div>
+          <div class="field">
+            <label for="model">Model <span class="optional">(optional)</span></label>
+            <input id="model" name="model" type="text" autocomplete="off" spellcheck="false"
+                   placeholder="Empty: the tool's default model">
+            <p class="help">A model name the tool accepts, written as one word.</p>
+          </div>
+          <div class="field">
+            <label for="effort">Reasoning effort</label>
+            <select id="effort" name="reasoning_effort">
+              <option value="">The tool's default</option>
+            </select>
+            <p class="help" id="effort-help">How long the model may think on each call. Codex CLI only.</p>
+          </div>
+        </div>
+        <p class="label sub-label">Checks<span class="cap" lang="zh-CN">审核</span></p>
+        <div class="row model checks">
+          <div class="field">
+            <label for="check-backend">Check model service</label>
+            <select id="check-backend" name="check_backend" disabled>
+              <option value="" selected>Same as the solver</option>
+              <option value="codex">Codex CLI (OpenAI models)</option>
+              <option value="claude">Claude Code CLI (Anthropic models)</option>
+              <option value="fake">Practice run (no model is called)</option>
+            </select>
+            <p class="help" id="check-backend-help">The statement check and the proof check use this service; every
+              other step uses the model service above.</p>
+          </div>
+          <div class="field">
+            <label for="check-model">Check model <span class="optional">(optional)</span></label>
+            <input id="check-model" name="check_model" type="text" autocomplete="off" spellcheck="false"
+                   placeholder="Empty: the solver's model" disabled>
+            <p class="help" id="check-model-help">A model name the check service accepts, written as one word.</p>
+          </div>
+          <div class="field">
+            <label for="check-effort">Check reasoning effort</label>
+            <select id="check-effort" name="check_reasoning_effort" disabled>
+              <option value="">Same as the solver</option>
+            </select>
+            <p class="help" id="check-effort-help">How long the model may think on each check. Codex CLI only.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col col-limits">
+        <p class="label">Limits<span class="cap" lang="zh-CN">限额</span></p>
+        <div class="row limits">
+          <div class="field">
+            <label for="calls">Maximum model calls</label>
+            <input id="calls" name="calls" type="number" min="2" max="100" step="1" value="12" required>
+            <p class="help">The run stops when it has used this many calls.</p>
+          </div>
+          <div class="field">
+            <label for="hours">Time limit for the whole run (hours)</label>
+            <input id="hours" name="hours" type="number" min="0.01" max="168" step="any" value="2" required>
+            <p class="help">The run stops at this time limit.</p>
+          </div>
+          <div class="field">
+            <label for="call-timeout">Time limit per model call (seconds)</label>
+            <input id="call-timeout" name="call_timeout" type="number" min="0.05" max="86400" step="any" placeholder="600"
+                   disabled>
+            <p class="help" id="call-timeout-help">Every model call may take up to 600 seconds in this version.</p>
+          </div>
+          <div class="field">
+            <label for="timeout-retries">Retries after a call timeout</label>
+            <input id="timeout-retries" name="timeout_retries" type="number" min="0" max="3" step="1" value="1" disabled>
+            <p class="help" id="timeout-retries-help">This version does not send a call again after it reaches its
+              time limit.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="start" type="submit">Start</button>
+        <span id="form-error" class="error" role="alert"></span>
+      </div>
+    </form>
+  </section>
+
+  <section id="view-runs" class="view hidden" aria-labelledby="runs-heading">
+    <h1 id="runs-heading">Runs<span class="cap" lang="zh-CN">运行记录</span></h1>
+    <p class="lead">Every run in <code id="runs-dir"></code>. The list updates by itself.</p>
+    <div id="runs-table"></div>
+  </section>
+
+  <section id="view-run" class="view view-run hidden" aria-live="polite"></section>
+</main>
+
+<footer>
+  Victorique runs on this computer. Closing this page or stopping the interface does not stop runs in progress: each
+  run ends at its own call budget or time limit, or when you press Stop run on its page or run
+  <code>victorique stop DIR</code>.
+</footer>
+</body>
+</html>

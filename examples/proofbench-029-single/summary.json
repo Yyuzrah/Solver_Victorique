@@ -1,0 +1,22 @@
+{
+  "run_id": "run-284e90810ce44fc4aa614803e0179bab",
+  "policy": "single",
+  "outcome": "complete",
+  "calls_used": 3,
+  "calls_limit": 3,
+  "wall_seconds": 1435.770511,
+  "deadline_utc": "2026-11-12T21:46:13.564362-05:00",
+  "transport": "codex",
+  "synthetic": false,
+  "requested_model": null,
+  "reported_model": null,
+  "cli_version": "0.167.0-alpha.4.1",
+  "tokens": {
+    "input_tokens": 38198,
+    "output_tokens": 8152,
+    "cached_input_tokens": 10368,
+    "reasoning_output_tokens": 5983
+  },
+  "proof_available": true,
+  "output_directory": "."
+}

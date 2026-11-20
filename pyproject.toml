@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "victorique"
+version = "0.2.0a1"
+description = "A bounded native mathematical problem-solving workflow"
+authors = [{ name = "Yuyang Zhang" }]
+readme = "README.md"
+license = "Apache-2.0 AND OFL-1.1"
+license-files = ["LICENSE", "NOTICE", "src/victorique/gui/static/OFL-*.txt"]
+requires-python = ">=3.11"
+dependencies = []
+keywords = ["mathematics", "proof", "proof checking", "language model", "problem solving"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: Microsoft :: Windows",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-xdist>=3"]
+
+[project.scripts]
+victorique = "victorique.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+victorique = ["*.json"]
+"victorique.gui" = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-n auto --maxprocesses=8 --dist worksteal --durations=5"
+tmp_path_retention_count = 0
+# With an explicit --basetemp, "failed" releases each successful test's tmp_path.
+tmp_path_retention_policy = "failed"

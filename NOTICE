@@ -1,0 +1,20 @@
+Victorique
+Copyright 2026 The Victorique Authors
+
+Licensed under the Apache License, Version 2.0.
+
+Fonts
+
+The web interface (victorique/gui/static/ in the package) includes three fonts,
+each licensed under the SIL Open Font License, Version 1.1. The license texts
+are in the same folder.
+
+- Michroma: Copyright 2011 The Michroma Project Authors
+  (https://github.com/googlefonts/Michroma-font). License: OFL-michroma.txt.
+- Barlow Semi Condensed: Copyright 2017 The Barlow Project Authors
+  (https://github.com/jpt/barlow). License: OFL-barlowsemicondensed.txt.
+- JetBrains Mono: Copyright 2020 The JetBrains Mono Project Authors
+  (https://github.com/JetBrains/JetBrainsMono). License: OFL-jetbrainsmono.txt.
+
+The font files are the latin and latin-ext subsets, and for JetBrains Mono also
+the greek subset and a math-symbol subset, as served by Google Fonts.

@@ -1,0 +1,1430 @@
+{
+  "propose_plan": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_plan.v1"
+        ]
+      },
+      "plan_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "revision": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "parent_revision": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "problem_ref": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "artifact_id",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "routes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "route_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "root_obligation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "obligations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "obligation_id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "assumptions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64
+                  },
+                  "depends_on": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                    },
+                    "maxItems": 64
+                  },
+                  "claimed_goal_coverage": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64
+                  },
+                  "failure_conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64
+                  }
+                },
+                "required": [
+                  "obligation_id",
+                  "statement",
+                  "assumptions",
+                  "depends_on",
+                  "claimed_goal_coverage",
+                  "failure_conditions"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 64,
+              "minItems": 1
+            }
+          },
+          "required": [
+            "route_id",
+            "root_obligation_id",
+            "obligations"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 8,
+        "minItems": 1
+      }
+    },
+    "required": [
+      "schema",
+      "plan_id",
+      "revision",
+      "parent_revision",
+      "problem_ref",
+      "routes"
+    ],
+    "additionalProperties": false
+  },
+  "replan": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_plan.v1"
+        ]
+      },
+      "plan_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "revision": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "parent_revision": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "problem_ref": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "artifact_id",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "routes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "route_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "root_obligation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "obligations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "obligation_id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "assumptions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64
+                  },
+                  "depends_on": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                    },
+                    "maxItems": 64
+                  },
+                  "claimed_goal_coverage": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64
+                  },
+                  "failure_conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64
+                  }
+                },
+                "required": [
+                  "obligation_id",
+                  "statement",
+                  "assumptions",
+                  "depends_on",
+                  "claimed_goal_coverage",
+                  "failure_conditions"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 64,
+              "minItems": 1
+            }
+          },
+          "required": [
+            "route_id",
+            "root_obligation_id",
+            "obligations"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 8,
+        "minItems": 1
+      }
+    },
+    "required": [
+      "schema",
+      "plan_id",
+      "revision",
+      "parent_revision",
+      "problem_ref",
+      "routes"
+    ],
+    "additionalProperties": false
+  },
+  "solve_obligation": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_candidate.v1"
+        ]
+      },
+      "artifact_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "revision": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "plan_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "plan_revision": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "route_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "obligation_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "parent_revision": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "content": {
+        "type": "string"
+      },
+      "assumptions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 64
+      },
+      "dependency_refs": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "artifact_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            "plan_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "plan_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            "route_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "obligation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "revision",
+            "plan_id",
+            "plan_revision",
+            "route_id",
+            "obligation_id"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 64
+      },
+      "addressed_issue_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+        },
+        "maxItems": 64
+      }
+    },
+    "required": [
+      "schema",
+      "artifact_id",
+      "revision",
+      "plan_id",
+      "plan_revision",
+      "route_id",
+      "obligation_id",
+      "parent_revision",
+      "content",
+      "assumptions",
+      "dependency_refs",
+      "addressed_issue_ids"
+    ],
+    "additionalProperties": false
+  },
+  "repair_obligation": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_candidate.v1"
+        ]
+      },
+      "artifact_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "revision": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "plan_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "plan_revision": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "route_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "obligation_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "parent_revision": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "content": {
+        "type": "string"
+      },
+      "assumptions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 64
+      },
+      "dependency_refs": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "artifact_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            "plan_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "plan_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            "route_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "obligation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "revision",
+            "plan_id",
+            "plan_revision",
+            "route_id",
+            "obligation_id"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 64
+      },
+      "addressed_issue_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+        },
+        "maxItems": 64
+      },
+      "assessments": {
+        "type": "array",
+        "maxItems": 64,
+        "items": {
+          "type": "object",
+          "properties": {
+            "issue_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "decision": {
+              "type": "string",
+              "enum": [
+                "confirmed",
+                "refuted",
+                "unresolved"
+              ]
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "issue_id",
+            "decision",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "schema",
+      "artifact_id",
+      "revision",
+      "plan_id",
+      "plan_revision",
+      "route_id",
+      "obligation_id",
+      "parent_revision",
+      "content",
+      "assumptions",
+      "dependency_refs",
+      "addressed_issue_ids",
+      "assessments"
+    ],
+    "additionalProperties": false
+  },
+  "integrate": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_candidate.v1"
+        ]
+      },
+      "artifact_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "revision": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "plan_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "plan_revision": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "route_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "obligation_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "parent_revision": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "content": {
+        "type": "string"
+      },
+      "assumptions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 64
+      },
+      "dependency_refs": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "artifact_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            "plan_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "plan_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            "route_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "obligation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "revision",
+            "plan_id",
+            "plan_revision",
+            "route_id",
+            "obligation_id"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 64
+      },
+      "addressed_issue_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+        },
+        "maxItems": 64
+      }
+    },
+    "required": [
+      "schema",
+      "artifact_id",
+      "revision",
+      "plan_id",
+      "plan_revision",
+      "route_id",
+      "obligation_id",
+      "parent_revision",
+      "content",
+      "assumptions",
+      "dependency_refs",
+      "addressed_issue_ids"
+    ],
+    "additionalProperties": false
+  },
+  "critique_candidate": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_critique.v1"
+        ]
+      },
+      "target_ref": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "plan_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "route_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "obligation_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "revision",
+          "plan_id",
+          "plan_revision",
+          "route_id",
+          "obligation_id"
+        ],
+        "additionalProperties": false
+      },
+      "findings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "victorique.adaptive_defect.v1"
+              ]
+            },
+            "issue_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "target_ref": {
+              "type": "object",
+              "properties": {
+                "artifact_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64
+                },
+                "plan_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "plan_revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64
+                },
+                "route_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "obligation_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                }
+              },
+              "required": [
+                "artifact_id",
+                "revision",
+                "plan_id",
+                "plan_revision",
+                "route_id",
+                "obligation_id"
+              ],
+              "additionalProperties": false
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "goal_gap",
+                "invalid_step",
+                "missing_case",
+                "assumption_mismatch",
+                "dependency_interface",
+                "ambiguity"
+              ]
+            },
+            "severity": {
+              "type": "string",
+              "enum": [
+                "fatal",
+                "material",
+                "minor"
+              ]
+            },
+            "location": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "start_byte": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end_byte": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "start_byte",
+                    "end_byte",
+                    "quote"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "claim": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "schema",
+            "issue_id",
+            "target_ref",
+            "kind",
+            "severity",
+            "location",
+            "claim"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 16
+      },
+      "no_gap_identified": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "schema",
+      "target_ref",
+      "findings",
+      "no_gap_identified"
+    ],
+    "additionalProperties": false
+  },
+  "investigate": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_disposition.v1"
+        ]
+      },
+      "issue_id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+      },
+      "target_ref": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "plan_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "route_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "obligation_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "revision",
+          "plan_id",
+          "plan_revision",
+          "route_id",
+          "obligation_id"
+        ],
+        "additionalProperties": false
+      },
+      "decision": {
+        "type": "string",
+        "enum": [
+          "confirmed",
+          "refuted",
+          "unresolved"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "location": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "start_byte": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end_byte": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "quote": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_byte",
+              "end_byte",
+              "quote"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "schema",
+      "issue_id",
+      "target_ref",
+      "decision",
+      "reason",
+      "location"
+    ],
+    "additionalProperties": false
+  },
+  "alignment_review": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_gate.v1"
+        ]
+      },
+      "gate_id": {
+        "type": "string",
+        "enum": [
+          "alignment_review"
+        ]
+      },
+      "problem_ref": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "artifact_id",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "target_ref": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "plan_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "route_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "obligation_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "revision",
+          "plan_id",
+          "plan_revision",
+          "route_id",
+          "obligation_id"
+        ],
+        "additionalProperties": false
+      },
+      "coverage": {
+        "type": "string",
+        "enum": [
+          "whole_problem_and_proof"
+        ]
+      },
+      "outcome": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail",
+          "unknown"
+        ]
+      },
+      "findings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "victorique.adaptive_defect.v1"
+              ]
+            },
+            "issue_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "target_ref": {
+              "type": "object",
+              "properties": {
+                "artifact_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64
+                },
+                "plan_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "plan_revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64
+                },
+                "route_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "obligation_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                }
+              },
+              "required": [
+                "artifact_id",
+                "revision",
+                "plan_id",
+                "plan_revision",
+                "route_id",
+                "obligation_id"
+              ],
+              "additionalProperties": false
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "goal_gap",
+                "invalid_step",
+                "missing_case",
+                "assumption_mismatch",
+                "dependency_interface",
+                "ambiguity"
+              ]
+            },
+            "severity": {
+              "type": "string",
+              "enum": [
+                "fatal",
+                "material",
+                "minor"
+              ]
+            },
+            "location": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "start_byte": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end_byte": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "start_byte",
+                    "end_byte",
+                    "quote"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "claim": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "schema",
+            "issue_id",
+            "target_ref",
+            "kind",
+            "severity",
+            "location",
+            "claim"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 16
+      },
+      "uncertainties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 64
+      }
+    },
+    "required": [
+      "schema",
+      "gate_id",
+      "problem_ref",
+      "target_ref",
+      "coverage",
+      "outcome",
+      "findings",
+      "uncertainties"
+    ],
+    "additionalProperties": false
+  },
+  "whole_proof_review": {
+    "type": "object",
+    "properties": {
+      "schema": {
+        "type": "string",
+        "enum": [
+          "victorique.adaptive_gate.v1"
+        ]
+      },
+      "gate_id": {
+        "type": "string",
+        "enum": [
+          "whole_proof_review"
+        ]
+      },
+      "problem_ref": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "artifact_id",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "target_ref": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "plan_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "route_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          },
+          "obligation_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "revision",
+          "plan_id",
+          "plan_revision",
+          "route_id",
+          "obligation_id"
+        ],
+        "additionalProperties": false
+      },
+      "coverage": {
+        "type": "string",
+        "enum": [
+          "whole_problem_and_proof"
+        ]
+      },
+      "outcome": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail",
+          "unknown"
+        ]
+      },
+      "findings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "victorique.adaptive_defect.v1"
+              ]
+            },
+            "issue_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+            },
+            "target_ref": {
+              "type": "object",
+              "properties": {
+                "artifact_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64
+                },
+                "plan_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "plan_revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64
+                },
+                "route_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                },
+                "obligation_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"
+                }
+              },
+              "required": [
+                "artifact_id",
+                "revision",
+                "plan_id",
+                "plan_revision",
+                "route_id",
+                "obligation_id"
+              ],
+              "additionalProperties": false
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "goal_gap",
+                "invalid_step",
+                "missing_case",
+                "assumption_mismatch",
+                "dependency_interface",
+                "ambiguity"
+              ]
+            },
+            "severity": {
+              "type": "string",
+              "enum": [
+                "fatal",
+                "material",
+                "minor"
+              ]
+            },
+            "location": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "start_byte": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end_byte": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "start_byte",
+                    "end_byte",
+                    "quote"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "claim": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "schema",
+            "issue_id",
+            "target_ref",
+            "kind",
+            "severity",
+            "location",
+            "claim"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 16
+      },
+      "uncertainties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 64
+      }
+    },
+    "required": [
+      "schema",
+      "gate_id",
+      "problem_ref",
+      "target_ref",
+      "coverage",
+      "outcome",
+      "findings",
+      "uncertainties"
+    ],
+    "additionalProperties": false
+  }
+}
